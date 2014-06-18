@@ -38,7 +38,7 @@ describe('multitenancy with testing account', function() {
             useSubDomains: true,
             subdomainsCount: 3,
             rootDirectory: path.join(__dirname, "../"),
-            NODE_ENV: 'production'
+            NODE_ENV: 'development'
         };
 
         MongoClient.connect('mongodb://127.0.0.1:27017/test', {}, function(err, db) {
