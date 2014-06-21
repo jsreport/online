@@ -3,7 +3,7 @@
     assert = require("assert"),
     connect = require("connect"),
     request = require('supertest'),
-    multitenancy = require('../multitenancy.js'),
+    multitenancy = require('../lib/multitenancy.js'),
     express = require("express"),
     MongoClient = require('mongodb').MongoClient,
     path = require("path"),

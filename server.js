@@ -1,19 +1,23 @@
-var ReportingServer = require("./reportingServer");
+var q = require('q');
 
-function getConfigFile() {
-    if (process.env.NODE_ENV === "production")
-        return "./prod.config.json";
+require("jsreport").bootstrapper()
+    .configure(function(config) {
+        config.set("rootDirectory", __dirname)
+    })
+    .express(function(nconf, app) {
+        app.use(require("connect-multiparty")());
+        var sessions = require("client-sessions");
+        app.use(sessions({
+            cookieName: 'session',
+            cookie: nconf.get("cookieSession:cookie"),
+            secret: nconf.get("cookieSession:secret"),
+            duration: 1000 * 60 * 60 * 24 * 365 * 10 // forever
+        }));
+    })
+    .initialize(function() {
+        return q.nfcall(require("./lib/multitenancy.js"), this.config.app, this.config);
+    })
+    .start();
 
-    if (process.env.NODE_ENV === "test")
-        return "./test.config.json";
 
-    return "./dev.config.json";
-}
 
-var config = require(getConfigFile());
-config.rootDirectory = __dirname;
-config.NODE_ENV = process.env.NODE_ENV;
-
-new ReportingServer(config).start(function(err){
-    if (!!err) console.error("Error starting application with: ",err);
-});
