@@ -53,7 +53,7 @@
     "scripts": {
         "test": "grunt test",
         "start": "node server.js",
-        "prepublish": "grunt prepublish"
+        "prepublish": "grunt build"
     },
     "author": "Jan Blaha",
     "license": "AGPU"
