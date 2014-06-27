@@ -1,3 +1,2 @@
 language: node_js
 services: mongodb
-install: npm install;cd node_modules;cd jsreport;npm install;cd ..;cd ..

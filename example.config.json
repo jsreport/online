@@ -1,15 +1,15 @@
-﻿{
+{
     "cookieSession": {
         "secret": "dasd321as56d1sd5s61vdv32",
         "cookie": { "domain": "local.net" }
     },
     "certificate": {
-        "key": "certificates/jsreport.net.key",    
+        "key": "certificates/jsreport.net.key",
         "cert": "certificates/jsreport.net.cert"
     },
     "connectionString": { "name": "mongoDB", "address": "localhost", "port": 27017, "databaseName" : "multitenant-root" },
     "extensions": ["express", "templates", "html", "phantom-pdf", "fop-pdf", "data", "images", "scripts", "sample-template", "childTemplates", "statistics", "reports", "excel-parser"],
-    "port": 3000,
+    "httpsPort": 3000,
     "useSubDomains": true,
     "subdomainsCount": 3
 }
