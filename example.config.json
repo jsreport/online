@@ -11,5 +11,13 @@
     "extensions": ["express", "templates", "html", "phantom-pdf", "fop-pdf", "data", "images", "scripts", "sample-template", "childTemplates", "statistics", "reports", "excel-parser"],
     "httpsPort": 3000,
     "useSubDomains": true,
-    "subdomainsCount": 3
+    "subdomainsCount": 3,
+    "phantom": {
+        "numberOfWorkers" : 1,
+        "timeout": 180000
+    },
+    "tasks": {
+        "numberOfWorkers" : 1,
+        "timeout": 10000
+    }
 }

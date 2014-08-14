@@ -1,12 +1,13 @@
 var q = require('q'),
     path = require('path');
 
-require("jsreport").bootstrapper({ pathToExampleConfig: path.join(__dirname, "example.config.json") })
-    .configure(function(config) {
-        config.set("rootDirectory", __dirname)
-    })
+var options = {
+    rootDirectory : require("path").join(__dirname),
+    pathToExampleConfig: path.join(__dirname, "example.config.json")
+};
+
+require("jsreport").bootstrapper(options)
     .express(function(nconf, app) {
-        app.use(require("connect-multiparty")());
         var sessions = require("client-sessions");
         app.use(sessions({
             cookieName: 'session',
