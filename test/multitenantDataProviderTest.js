@@ -1,11 +1,14 @@
-var DataProvider = require("../lib/multitenantDataProvider.js"),
-    should = require("should");
+var foo = require("odata-server"),
+    DataProvider = require("../lib/multitenantDataProvider.js"),
+    should = require("should"),
+    logger = require("../logger.js")
+
 
 describe('multitenant data provider', function () {
 
     it('should filter data by tenants', function (done) {
 
-        var dataProvider = new DataProvider({ name: "mongoDB", databaseName: "test", address: "127.0.0.1", port: 27017 }, {   tenant: { name: "test1"} });
+        var dataProvider = new DataProvider({ name: "mongoDB", databaseName: "test", address: "127.0.0.1", port: 27017, logger: logger({}) }, {  tenant: { name: "test1"} });
         dataProvider.buildContext();
         dataProvider.dropStore().then(
 

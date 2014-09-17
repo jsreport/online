@@ -12,7 +12,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         mochaTest: {
             test: {
-                src: ['test/*.js']
+                src: ['test/multitenancyTest.js']
             }
         },
 

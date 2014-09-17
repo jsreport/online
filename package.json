@@ -6,6 +6,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "async-replace": "^1.0.0",
+    "azure": "^0.9.16",
     "body-parser": "^1.6.5",
     "client-sessions": "^0.6.0",
     "connect": "^2.19.6",
