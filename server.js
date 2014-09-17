@@ -54,9 +54,9 @@ function findTempDirectory(config, cb) {
     });
 }
 
-require("jsreport").bootstrapper({ rootDirectory: __dirname}).createReporter(function () {
-    //we dont wont any reporter right now
-}).start().then(function (bootstrapper) {
+require("jsreport").bootstrapper({ rootDirectory: __dirname})
+    .createReporter(function () {   /*we dont wont any reporter right now */})
+    .start().then(function (bootstrapper) {
     var sessions = require("client-sessions");
 
     app.use(sessions({
