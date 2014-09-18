@@ -47,7 +47,7 @@ describe('multitenancy with testing account', function () {
 
                 request(app).post('/register')
                     .type('form')
-                    .send({ username: "test@test.cz", name: "joj", password: "password", passwordConfirm: "password" })
+                    .send({ username: "test@test.cz", name: "joj", password: "password", passwordConfirm: "password", terms: true })
                     .end(function (err, res) {
                         registrationResponse = res;
                         done();
