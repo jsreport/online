@@ -98,11 +98,20 @@
                                 <span class="input-err"><%= viewModel.password %></span>
                                 <% } %>            
                             </div>
-                            <div class="input-control text" data-role="input-control">
-                                <input class="text" placeholder="confirm password" type="password" name="passwordConfirm" value="">
-                            </div>
+
                             <% if (viewModel.passwordConfirm) { %>
                             <span class="input-err"><%= viewModel.passwordConfirm %></span>
+                            <% } %>
+                            <div class="input-control checkbox">
+                                <label>
+                                    <input name="terms" type="checkbox"><span class="check"></span>
+                                    I agree with <a href="/terms" target="_blank">terms and conditions</a>
+                                </label>
+                            </div>
+                            <% if (viewModel.terms) { %>
+                            <div>
+                                <span class="input-err"><%= viewModel.terms %></span>
+                            </div>
                             <% } %>
                             <button class="button btn-login span4 info fg-white" type="submit">Create account</button>
                         </fieldset>
