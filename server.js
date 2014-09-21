@@ -51,6 +51,7 @@ function findTempDirectory(config, cb) {
         if (err)
             return;
         config.tempDirectory = res["temp"]["path"];
+        cb();
     });
 }
 

@@ -11,8 +11,12 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         mochaTest: {
+            options: {
+                clearRequireCache: true,
+                timeout: 5000
+            },
             test: {
-                src: ['test/multitenancyTest.js']
+                src: ['test/*.js']
             }
         },
 
