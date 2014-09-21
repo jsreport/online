@@ -1,4 +1,4 @@
-var Multitenancy = require("../lib/multiTenancy.js"),
+var Multitenancy = require("../lib/multitenancy.js"),
     app = require("express")(),
     should = require("should"),
     q = require("q"),
