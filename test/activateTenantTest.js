@@ -1,6 +1,5 @@
 var activateTenant = require("../lib/activateTenant.js"),
     app = require("express")(),
-    Multitenancy = require("../lib/multiTenancy.js"),
     should = require("should"),
     baseTest = require("./baseTest.js");
 
