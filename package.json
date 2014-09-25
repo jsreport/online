@@ -19,6 +19,7 @@
     "jsreport": "jsreport/jsreport",
     "jsreport-contrib-jira": "jsreport/jsreport-contrib-jira",
     "method-override": "^2.0.2",
+    "mongodb": "^1.4.14",
     "nconf": "^0.6.9",
     "node.extend": "^1.0.10",
     "odata-server": "^1.3.6",
