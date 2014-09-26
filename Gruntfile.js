@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         mochaTest: {
             options: {
                 clearRequireCache: true,
-                timeout: 5000
+                timeout: 10000
             },
             test: {
                 src: ['test/*.js']
