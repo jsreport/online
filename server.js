@@ -44,6 +44,12 @@ var startApp = function (app, config) {
         rejectUnauthorized: false //support invalid certificates
     };
 
+    if (config.certificate.ca) {
+        credentials.ca = config.certificate.ca.map(function(c) {
+            return fs.readFileSync(c, 'utf8');
+        });
+    }
+
     var server = https.createServer(credentials, function(req, res) { clusterDomainMiddleware(cluster, server, multitenancy.logger, req, res, app); }).on('error', function (e) {
         console.error("Error when starting https server on port " + config.httpsPort + " " + e.stack);
     }).listen(config.httpsPort);
