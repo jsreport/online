@@ -1,15 +1,24 @@
-//"connectionString": { "name": "mongoDB", "address": "localhost", "port": 27017, "databaseName" : "multitenant-root" },
-//"connectionString": { "name": "mongoDB", "address": ["191.233.107.229", "191.233.107.229", "191.233.107.229"],  "port": [27017,64296, 55348], "replicaSet" : "rs", "databaseName" : "multitenant-root" },
 var q = require('q'),
     path = require('path'),
     app = require("express")(),
     fs = require("fs"),
     https = require("https"),
     http = require("http"),
+    cluster = require("cluster"),
     routes = require("./lib/routes.js"),
+    clusterDomainMiddleware = require("./node_modules/jsreport/extension/express/lib/clusterDomainMiddleware.js"),
     Multitenancy = require("./lib/multitenancy.js");
 
 var multitenancy;
+
+if (cluster.isMaster) {
+    cluster.fork();
+    cluster.on('disconnect', function (worker) {
+        cluster.fork();
+    });
+
+    return;
+}
 
 var startApp = function (app, config) {
     if (config.httpPort) {
@@ -28,12 +37,14 @@ var startApp = function (app, config) {
     }
 
     var credentials = {
-        key: fs.readFileSync(config.certificate.key, 'utf8'),
-        cert: fs.readFileSync(config.certificate.cert, 'utf8'),
+        pfx: config.certificate.pfx ? fs.readFileSync(config.certificate.pfx) : undefined,
+        passphrase: config.certificate.passphrase,
+        key: config.certificate.key ? fs.readFileSync(config.certificate.key, 'utf8') : undefined,
+        cert: config.certificate.cert ? fs.readFileSync(config.certificate.cert, 'utf8') : undefined,
         rejectUnauthorized: false //support invalid certificates
     };
 
-    var server = https.createServer(credentials, app).on('error', function (e) {
+    var server = https.createServer(credentials, function(req, res) { clusterDomainMiddleware(cluster, server, multitenancy.logger, req, res, app); }).on('error', function (e) {
         console.error("Error when starting https server on port " + config.httpsPort + " " + e.stack);
     }).listen(config.httpsPort);
 };
