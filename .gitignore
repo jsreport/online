@@ -136,3 +136,6 @@ app_built.js
 app_dev.js
 root_dev.html
 root_built.html
+
+certificates/*
+startup-error.txt
