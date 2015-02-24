@@ -14,7 +14,7 @@ define(["app", "marionette", "backbone", "jquery"],
                 $el = $el || $("#creditStatus");
 
                 var usedCredits = app.settings.tenant.creditsUsed - (app.settings.tenant.creditsBilled);
-                var creditsString = usedCredits + " / " + app.settings.tenant.creditsAvailable
+                var creditsString = usedCredits + " / " + (app.settings.tenant.creditsAvailable || "300000");
                 $el.html(creditsString);
 
                 $el.removeClass("btn-success").removeClass("btn-danger");
@@ -26,7 +26,7 @@ define(["app", "marionette", "backbone", "jquery"],
             }
 
             app.on("user-info-render", function (context) {
-                context.result += "<a id='creditStatus' class='btn-success'>loading..</a>";
+                context.result += "<li><a id='creditStatus' class='btn-success'>Loading ...</a></li>";
 
                 context.on("after-render", function($el) {
                     updateCreditStatus($el.find("#creditStatus"));

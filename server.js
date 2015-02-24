@@ -6,6 +6,7 @@ var q = require('q'),
     http = require("http"),
     cluster = require("cluster"),
     routes = require("./lib/routes.js"),
+    cors = require('cors'),
     clusterDomainMiddleware = require("./node_modules/jsreport/extension/express/lib/clusterDomainMiddleware.js"),
     Multitenancy = require("./lib/multitenancy.js");
 
@@ -22,7 +23,7 @@ if (cluster.isMaster) {
 
 var startApp = function (app, config) {
     if (config.httpPort) {
-        http.createServer(function (req, res) {
+        var server  = http.createServer(function (req, res) {
             if (req.url === '/api/warmup') {
                 return multitenancy.warmup(req, res);
             }
@@ -34,6 +35,7 @@ var startApp = function (app, config) {
         }).listen(config.httpPort).on('error', function (e) {
             console.error("Error when starting http server on port " + config.httpPort + " " + e.stack);
         });
+        server.setTimeout(60000);
     }
 
     var credentials = {
@@ -61,6 +63,13 @@ require("jsreport").bootstrapper({ rootDirectory: __dirname})
     .start().then(function (bootstrapper) {
         var sessions = require("client-sessions");
 
+        app.options('*', function(req, res) {
+            require("cors")({
+                methods : ["GET", "POST", "PUT", "DELETE", "PATCH", "MERGE"],
+                origin: true
+            })(req, res);
+        });
+
         app.use(sessions({
             cookieName: 'session',
             cookie: bootstrapper.config.cookieSession.cookie,
@@ -70,6 +79,7 @@ require("jsreport").bootstrapper({ rootDirectory: __dirname})
 
         multitenancy = Multitenancy(app, bootstrapper.config);
 
+        app.use(cors());
         routes(app, bootstrapper.config, multitenancy);
 
         startApp(app, bootstrapper.config);

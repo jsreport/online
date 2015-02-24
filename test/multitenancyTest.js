@@ -14,7 +14,7 @@ baseTest(function (multitenancy) {
 
     var app;
     describe('multitenancy with testing account', function () {
-        this.timeout(60000);
+        this.timeout(30000);
 
         var registrationResponse;
 
@@ -104,63 +104,6 @@ baseTest(function (multitenancy) {
             it('GET /odata should response 401 for invalid credentials', function (done) {
                 request(app).get("/odata/templates")
                     .expect(401, done);
-            });
-        });
-
-
-        describe('without subdomain', function () {
-            beforeEach(function () {
-                multitenancy.options.useSubDomains = false;
-            });
-
-            it('should redirect to studio after registration', function (done) {
-                request(app).get(registrationResponse.header.location)
-                    .set("cookie", registrationResponse.headers['set-cookie'])
-                    .end(function (err, res) {
-                        res.text.should.containEql("jsreport$studio");
-                        done();
-                    });
-            });
-
-            it('GET / 200', function (done) {
-                request(app).get('/').expect(200, done);
-            });
-
-            it('POST /login with invalid password should redirect to login', function (done) {
-                request(app).post("/login")
-                    .type('form')
-                    .send({ username: "XXXXX@test.cz", password: "password" })
-                    .end(function (err, res) {
-                        request(app).get(res.header.location)
-                            .set("cookie", res.headers['set-cookie'])
-                            .end(function (err, res) {
-                                res.text.should.containEql("jsreport$login");
-                                done();
-                            });
-                    });
-            });
-
-
-            it('POST /login with valid password should go dashboard', function (done) {
-                request(app).post("/login")
-                    .type('form')
-                    .send({ username: "test@test.cz", password: "password" })
-                    .end(function (err, res) {
-                        if (err) return done(err);
-                        request(app).get(res.header.location)
-                            .set("cookie", res.headers['set-cookie'])
-                            .end(function (err, res) {
-                                res.text.should.containEql("jsreport$studio");
-                                done();
-                            });
-                    });
-            });
-
-            it('POST /api should be able to start another reporter on another multitenancy instance', function (done) {
-                routes(app, multitenancy.options, multitenancy);
-                request(app).get('/api/version')
-                    .set("cookie", registrationResponse.headers['set-cookie'])
-                    .expect(200, done);
             });
         });
     });
