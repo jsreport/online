@@ -4,6 +4,8 @@ var Multitenancy = require("../lib/multitenancy.js"),
     q = require("q"),
     MongoClient = require('mongodb').MongoClient;
 
+//travis has some super multicpu machines allocating too many phantom instances
+require("events").EventEmitter.defaultMaxListeners = 50;
 
 module.exports = function (nestedSuite) {
     var multitenancy = Multitenancy(app, require("./defaultOptions.js")());

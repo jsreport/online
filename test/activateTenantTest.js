@@ -3,7 +3,6 @@ var activateTenant = require("../lib/activateTenant.js"),
     should = require("should"),
     baseTest = require("./baseTest.js");
 
-
 baseTest(function(multitenancy) {
 
     describe('activating tenant', function () {
