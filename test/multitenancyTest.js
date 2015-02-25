@@ -38,6 +38,9 @@ baseTest(function (multitenancy) {
                 .type('form')
                 .send({ username: "test@test.cz", name: "joj", password: "password", passwordConfirm: "password", terms: true })
                 .end(function (err, res) {
+                    if (err)
+                        return done(err);
+                    
                     registrationResponse = res;
                     done();
                 });
