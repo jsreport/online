@@ -10,7 +10,10 @@ module.exports = function() {
         logger: logger({}),
         rootDirectory: path.join(__dirname, "../"),
         NODE_ENV: 'development',
-        tempDirectory: require("os").tmpdir()
+        tempDirectory: require("os").tmpdir(),
+        phantom: {
+            numberOfWorkers: 1
+        }
     };
 }
 
