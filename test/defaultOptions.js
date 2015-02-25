@@ -13,6 +13,9 @@ module.exports = function() {
         tempDirectory: require("os").tmpdir(),
         phantom: {
             numberOfWorkers: 1
+        },
+        "tasks": {
+            "numberOfWorkers" : 1
         }
     };
 }
