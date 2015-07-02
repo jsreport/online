@@ -33,7 +33,7 @@ define(["app", "marionette", "backbone", "jquery"],
                     $el.find("#creditStatus").click(function() {
                         $.dialog({
                             header: "CREDITS STATUS",
-                            content: $.render["billing-dialog"](),
+                            content: $.render["billing-dialog"](app.settings.tenant),
                             hideSubmit: true
                         });
                     });

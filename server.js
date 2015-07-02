@@ -52,7 +52,11 @@ var startApp = function (app, config) {
         });
     }
 
-    var server = https.createServer(credentials, function(req, res) { clusterDomainMiddleware(cluster, server, multitenancy.logger, req, res, app); }).on('error', function (e) {
+    var server = https.createServer(credentials, function(req, res) {
+        clusterDomainMiddleware(cluster, server, multitenancy.logger, req, res, function() {
+            app(req, res);
+        });
+    }).on('error', function (e) {
         console.error("Error when starting https server on port " + config.httpsPort + " " + e.stack);
     }).listen(config.httpsPort);
 };

@@ -3,11 +3,11 @@ var billing = require("../lib/billing.js");
 
 describe('chargeCredits', function () {
     it("should take number of pages from header", function() {
-        billing.chargeCredits({ }, {}, { headers:  { "Number-Of-Pages": 6} }).creditsUsed.should.be.eql(2);
+        billing.chargeCredits({ }, {}, { headers:  { "Number-Of-Pages": 6} }).$inc.creditsUsed.should.be.eql(2);
     });
 
     it("default number of pages should be 1", function() {
-        billing.chargeCredits({ }, {}, { headers:  {} }).creditsUsed.should.be.eql(1);
+        billing.chargeCredits({ }, {}, { headers:  {} }).$inc.creditsUsed.should.be.eql(1);
     });
 });
 
@@ -23,8 +23,8 @@ describe('checkBilling', function () {
 
         var update = billing.checkBilling(tenant, now);
         (update === null).should.be.false;
-        update.lastBilledDate.should.be.eql(now);
-        update.creditsBilled.should.be.eql(100);
+        update.$set.lastBilledDate.should.be.eql(now);
+        update.$inc.creditsBilled.should.be.eql(100);
     });
 
     it("should charge when current day is the last day of the month and billing day is greater then current", function() {
@@ -38,8 +38,8 @@ describe('checkBilling', function () {
 
         var update = billing.checkBilling(tenant, now);
         (update === null).should.be.false;
-        update.lastBilledDate.should.be.eql(now);
-        update.creditsBilled.should.be.eql(100);
+        update.$set.lastBilledDate.should.be.eql(now);
+        update.$inc.creditsBilled.should.be.eql(100);
     });
 
     it("should NOT charge when already charged this month", function() {
