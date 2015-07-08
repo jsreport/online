@@ -1,91 +1,135 @@
-<script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
-<a class="gumroad-button" id="gumroadFree" href="https://gumroad.com/l/GQMaL">Buy my product</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="product" content="jsreportonline | Cloud reporting services">
+    <meta name="description" content="Cloud reporting services">
+    <meta name="author" content="jsreport">
+    <meta name="keywords" content="js, javascript, css, html, jsreport, template, report, opensource, pdf, cloud">
 
-<style>
-    .bg-green {
-        background-color: #60a917 !important
-    }
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="css/metro-bootstrap.css" rel="stylesheet">
+    <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
+    <link href="js/prettify/prettify.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style-login.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.widget.min.js"></script>
+    <script src="js/load-metro.js"></script>
+    <script src="js/metro.min.js"></script>
+    <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+    <title>jsreportonline - pricing </title>
+</head>
+<body class="metro">
 
-    .bg-teal {
-        background-color: #00aba9 !important
-    }
+<nav class="navigation-bar dark">
+    <nav class="navigation-bar-content container">
+        <a href="/" class="element brand">
+            <div class="brand-logo">
+            </div></a>
+    </nav>
+</nav>
 
-    .bg-steel {
-        background-color: #647687 !important
-    }
+<div class="container">
 
-    .bg-yellow {
-        background-color: #e3c800 !important
-    }
+    <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+    <a class="gumroad-button" id="gumroadFree" href="https://gumroad.com/l/dzcYp">Buy my product</a>
+    <a class="gumroad-button" id="gumroadBronze" href="https://gumroad.com/l/RRSCp">Buy my product</a>
+    <a class="gumroad-button" id="gumroadSilver" href="https://gumroad.com/l/zgDSN">Buy my product</a>
+    <a class="gumroad-button" id="gumroadGold" href="https://gumroad.com/l/dzcYp">Buy my product</a>
 
-    .bg-hover-gray:hover {
-        background-color: #555 !important
-    }
-
-    .fg-white {
-        color: #fff !important;
-    }
-
-    .payment-button {
-        width: 200px;
-        display: inline-block;
-    }
-
-    .cancel {
-        margin-top: 10px
-    }
-</style>
+    <style>
+        .gumroad-button {
+            display: none !important
+        }
+    </style>
 
 
+    <div>
+
+        <a class="btn bg-blue padding10 text-center bg-hover-gray place-right" href="/"><h2 class="fg-white">Back to Studio</h2></a>
+
+        <h2>current</h2>
+        <a class="btn padding5 fg-white <%=
+        viewModel.plan === "bronze" ? "bg-teal" : viewModel.plan === "silver" ? "bg-steel" : viewModel.plan === "gold" ? "bg-yellow" : "bg-green"%>"><%= viewModel.plan || "free" %></a>
+
+        <a class="btn padding5 fg-white <%= viewModel.creditsUsed > viewModel.creditsAvailable ? "bg-red" : "bg-green" %>"><%= viewModel.creditsUsed%>/<%= viewModel.creditsAvailable%></a>
 
 
-<div>
+        <h2>upgrade</h2>
 
-    <h4>current</h4>
-    <label class="label  label-info">{{:plan}} / {{:creditsAvailable}}</label>
+        <div class="grid fluid">
+            <div class="row">
+                <div class="span3">
+                    <button class="span12 bg-green padding20 text-center bg-hover-gray"
+                            onclick="$('#gumroadFree')[0].click()">
+                        <h2 class="fg-white">FREE</h2>
+                        <hr>
+                        <span class="fg-white">monthly price</span>
 
-    <h4>upgrade</h4>
+                        <h3 class="fg-white">0 $ / no card</h3>
+                        <hr>
+                        <span class="fg-white">monthly credits *</span>
 
-    <a class="gumroad-button payment-button bg-teal text-center bg-hover-gray" id="gumroadBronze">
-        <h5 class="fg-white">BRONZE</h5>
-        <hr>
-        <span class="fg-white">monthly price</span>
+                        <h3 class="fg-white">200</h3>
+                    </button>
+                </div>
 
-        <h6 class="fg-white">9.95 $</h6>
-        <hr>
-        <span class="fg-white">monthly credits</span>
+                <div class="span3">
+                    <button class="span12 bg-teal padding20 text-center bg-hover-gray"
+                            onclick="$('#gumroadBronze')[0].click()">
+                        <h2 class="fg-white">BRONZE</h2>
+                        <hr>
+                        <span class="fg-white">monthly price</span>
 
-        <h6 class="fg-white">10 000</h6>
-    </a>
+                        <h3 class="fg-white">9.95 $</h3>
+                        <hr>
+                        <span class="fg-white">monthly credits *</span>
 
-    <a class="gumroad-button payment-button bg-steel text-center bg-hover-gray">
-        <h5 class="fg-white">SILVER</h5>
-        <hr>
-        <span class="fg-white">monthly price</span>
+                        <h3 class="fg-white">10 000</h3>
+                    </button>
+                </div>
 
-        <h6 class="fg-white">99.95 $</h6>
-        <hr>
-        <span class="fg-white">monthly credits</span>
+                <div class="span3">
+                    <button class="span12 bg-steel padding20 text-center bg-hover-gray"
+                            onclick="$('#gumroadSilver')[0].click()">
+                        <h2 class="fg-white">SILVER</h2>
+                        <hr>
+                        <span class="fg-white">monthly price</span>
 
-        <h6 class="fg-white">100 000</h6>
-    </a>
+                        <h3 class="fg-white">99.95 $</h3>
+                        <hr>
+                        <span class="fg-white">monthly credits *</span>
 
-    <a class="gumroad-button payment-button bg-yellow text-center bg-hover-gray" href="https://gumroad.com/l/GQMaL">
-        <h5 class="fg-white">GOLD</h5>
-        <hr>
-        <span class="fg-white">monthly price</span>
+                        <h3 class="fg-white">100 000</h3>
+                    </button>
+                </div>
 
-        <h6 class="fg-white">299.95 $</h6>
-        <hr>
-        <span class="fg-white">monthly report credits</span>
+                <div class="span3">
+                    <button class="span12 bg-yellow padding20 text-center bg-hover-gray"
+                            onclick="$('#gumroadGold')[0].click()">
+                        <h2 class="fg-white">GOLD</h2>
+                        <hr>
+                        <span class="fg-white">monthly price</span>
 
-        <h6 class="fg-white">300 000</h6>
-    </a>
+                        <h3 class="fg-white">299.95 $</h3>
+                        <hr>
+                        <span class="fg-white">monthly report credits *</span>
 
+                        <h3 class="fg-white">300 000</h3>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <p class="description padding20 bg-grayLighter">
+                    You can cancel subscription <a href="https://gumroad.com/library" target="_blank">here</a>.
+                </p>
+
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="cancel">
-    <p>
-        You can cancel subscription <a href="https://gumroad.com/library" target="_blank">here</a>.
-    </p>
-</div>
+</body>
+</html>

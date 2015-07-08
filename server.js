@@ -28,6 +28,10 @@ var startApp = function (app, config) {
                 return multitenancy.warmup(req, res);
             }
 
+            if (req.url === '/gumroad-hook') {
+                return multitenancy.gumroad(req, res);
+            }
+
             res.writeHead(302, {
                 'Location': "https://" + (req.headers.host ? req.headers.host.split(':')[0] : config.cookieSession.cookie.domain) + ':' + config.httpsPort + req.url
             });
