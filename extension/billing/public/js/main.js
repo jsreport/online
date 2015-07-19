@@ -26,16 +26,12 @@ define(["app", "marionette", "backbone", "jquery"],
             }
 
             app.on("user-info-render", function (context) {
-                context.result += "<li><a id='creditStatus' class='btn-success'>Loading ...</a></li>";
+                context.result = "<li><a id='creditStatus' class='btn-success'>Loading ...</a></li>" + context.result;
 
                 context.on("after-render", function($el) {
                     updateCreditStatus($el.find("#creditStatus"));
                     $el.find("#creditStatus").click(function() {
-                        $.dialog({
-                            header: "CREDITS STATUS",
-                            content: $.render["billing-dialog"](app.settings.tenant),
-                            hideSubmit: true
-                        });
+                        window.location = "/gumroad";
                     });
                 });
             });

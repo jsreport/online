@@ -23,6 +23,20 @@
 </head>
 <body class="metro">
 
+<script>
+    var previousVisible = false;
+    setInterval(function(){
+        var hidden = $(".gumroad_overlay_iframe").css('display') == 'none' || $(".gumroad_overlay_iframe").length === 0;
+
+        if (hidden && previousVisible) {
+            setTimeout(function() {
+                window.location.reload(1);
+            }, 3000);
+        }
+        previousVisible = !hidden;
+    }, 1000);
+</script>
+
 <nav class="navigation-bar dark">
     <nav class="navigation-bar-content container">
         <a href="/" class="element brand">
@@ -34,10 +48,10 @@
 <div class="container">
 
     <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
-    <a class="gumroad-button" id="gumroadFree" href="https://gumroad.com/l/dzcYp">Buy my product</a>
+    <a class="gumroad-button" id="gumroadFree" href="https://gumroad.com/l/GQMaL">Buy my product</a>
     <a class="gumroad-button" id="gumroadBronze" href="https://gumroad.com/l/RRSCp">Buy my product</a>
     <a class="gumroad-button" id="gumroadSilver" href="https://gumroad.com/l/zgDSN">Buy my product</a>
-    <a class="gumroad-button" id="gumroadGold" href="https://gumroad.com/l/dzcYp">Buy my product</a>
+    <a class="gumroad-button" id="gumroadGold" href="https://gumroad.com/l/YxcE">Buy my product</a>
 
     <style>
         .gumroad-button {
@@ -54,7 +68,7 @@
         <a class="btn padding5 fg-white <%=
         viewModel.plan === "bronze" ? "bg-teal" : viewModel.plan === "silver" ? "bg-steel" : viewModel.plan === "gold" ? "bg-yellow" : "bg-green"%>"><%= viewModel.plan || "free" %></a>
 
-        <a class="btn padding5 fg-white <%= viewModel.creditsUsed > viewModel.creditsAvailable ? "bg-red" : "bg-green" %>"><%= viewModel.creditsUsed%>/<%= viewModel.creditsAvailable%></a>
+        <a class="btn padding5 fg-white <%= (viewModel.creditsUsed - viewModel.creditsBilled) > viewModel.creditsAvailable ? "bg-red" : "bg-green" %>"><%= viewModel.creditsUsed - viewModel.creditsBilled %>/<%= viewModel.creditsAvailable%></a>
 
 
         <h2>upgrade</h2>
@@ -124,9 +138,12 @@
 
             <div class="row">
                 <p class="description padding20 bg-grayLighter">
-                    You can cancel subscription <a href="https://gumroad.com/library" target="_blank">here</a>.
+                    You can cancel your subscription at any time <a href="https://gumroad.com/library" target="_blank">here</a>.<br/>
                 </p>
 
+                <p class="description padding20 bg-grayLighter strong">
+                    Please unsubscribe your old subscription when switching payed plans.
+                </p>
             </div>
         </div>
     </div>

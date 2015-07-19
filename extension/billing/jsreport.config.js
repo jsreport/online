@@ -1,5 +1,5 @@
 module.exports = {
     "name": "billing",
     "main": "lib/billing.js",
-    "dependencies": []
+    "dependencies": ["template", "authentication", "authorization"]
 }

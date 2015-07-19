@@ -10,6 +10,43 @@ var q = require('q'),
     clusterDomainMiddleware = require("./node_modules/jsreport/extension/express/lib/clusterDomainMiddleware.js"),
     Multitenancy = require("./lib/multitenancy.js");
 
+//https.globalAgent = false;
+
+/*require("azure").RoleEnvironment.isAvailable(function(error, available) {
+    require("fs").appendFile("jsreportout.txt", new Date() + " Is Available " + error + available, function(err) { ; });
+});*/
+
+require("azure").RoleEnvironment.on("changing", function (changes) {
+    changes.cancel();
+    require("fs").appendFile("jsreportout.txt", new Date() + " Changing", function(err) { ; });
+    //require("azure").RoleEnvironment.clearStatus(function() { });
+});
+
+require("azure").RoleEnvironment.on("changed", function (changes) {
+    require("fs").appendFile("jsreportout.txt", new Date() + " Changed", function(err) { ; });
+    //require("azure").RoleEnvironment.clearStatus(function() { });
+});
+
+require("azure").RoleEnvironment.on("stopping", function (changes) {
+    require("fs").appendFile("jsreportout.txt", new Date() + " Stopping", function(err) { ; });
+
+    /*require("azure").RoleEnvironment.setStatus("stopped",
+        new Date('9999-12-31T23:59:59.9999999'), function (error1) {
+            require("fs").appendFile("jsreportout.txt", new Date() + " Setting Ready Done " + error1, function(err) { ; });
+        });*/
+    /*setTimeout(function() {
+        require("azure").RoleEnvironment.clearStatus(function(err) {
+            require("fs").appendFile("jsreportout.txt", new Date() + " Status Done " + err, function(err) { ; });
+        });
+    }, 2000);*/
+    //process.exit();
+});
+
+require("azure").RoleEnvironment.on("ready", function (changes) {
+    require("fs").appendFile("jsreportout.txt", new Date() + " Ready", function(err) { ; });
+    //require("azure").RoleEnvironment.clearStatus(function() { });
+});
+
 var multitenancy;
 
 if (cluster.isMaster) {
@@ -20,6 +57,8 @@ if (cluster.isMaster) {
 
     return;
 }
+
+
 
 var startApp = function (app, config) {
     if (config.httpPort) {
@@ -69,6 +108,7 @@ require("jsreport").bootstrapper({ rootDirectory: __dirname})
     .createReporter(function () {   /*we dont wont any reporter right now */
     })
     .start().then(function (bootstrapper) {
+
         var sessions = require("client-sessions");
 
         app.options('*', function(req, res) {
@@ -85,12 +125,16 @@ require("jsreport").bootstrapper({ rootDirectory: __dirname})
             duration: 1000 * 60 * 60 * 24 * 365 * 10 // forever
         }));
 
-        multitenancy = Multitenancy(app, bootstrapper.config);
+        var scriptManager = require("script-manager")(bootstrapper.config.tasks);
 
-        app.use(cors());
-        routes(app, bootstrapper.config, multitenancy);
+        scriptManager.ensureStarted(function() {
+            multitenancy = Multitenancy(app, bootstrapper.config, scriptManager);
 
-        startApp(app, bootstrapper.config);
+            app.use(cors());
+            routes(app, bootstrapper.config, multitenancy);
+
+            startApp(app, bootstrapper.config);
+        });
     }).catch(function (e) {
         fs.writeFileSync("startup-error.txt", e.stack);
         console.log(e.stack);
