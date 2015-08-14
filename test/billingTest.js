@@ -17,9 +17,24 @@ describe('checkBilling', function () {
             createdOn : new Date(2014,05,05),
             creditsUsed : 100,
             lastBilledDate : new Date(2014,05,05)
-        }
+        };
 
         var now = new Date(2014, 06, 05);
+
+        var update = billing.checkBilling(tenant, now);
+        (update === null).should.be.false;
+        update.$set.lastBilledDate.should.be.eql(now);
+        update.$inc.creditsBilled.should.be.eql(100);
+    });
+
+    it("should charge when the last billed day is way in past", function() {
+        var tenant = {
+            createdOn : new Date(2014,05,12),
+            creditsUsed : 100,
+            lastBilledDate : new Date(2014,11,11)
+        };
+
+        var now = new Date(2015, 03, 03);
 
         var update = billing.checkBilling(tenant, now);
         (update === null).should.be.false;
