@@ -23,20 +23,6 @@
 </head>
 <body class="metro">
 
-<script>
-    var previousVisible = false;
-    setInterval(function(){
-        var hidden = $(".gumroad_overlay_iframe").css('display') == 'none' || $(".gumroad_overlay_iframe").length === 0;
-
-        if (hidden && previousVisible) {
-            setTimeout(function() {
-                window.location.reload(1);
-            }, 3000);
-        }
-        previousVisible = !hidden;
-    }, 1000);
-</script>
-
 <nav class="navigation-bar dark">
     <nav class="navigation-bar-content container">
         <a href="/" class="element brand">
@@ -54,7 +40,7 @@
     <a class="gumroad-button" id="gumroadGold" href="https://gumroad.com/l/YxcE">Buy my product</a>
 
     <style>
-        .gumroad-button {
+        a.gumroad-button {
             display: none !important
         }
     </style>
