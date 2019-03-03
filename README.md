@@ -1,3 +1,5 @@
+**DEPRECATED current jsreportonline repository is here https://github.com/jsreportonline/main**
+
 jsreport Online
 ==========
 [![Build Status](https://travis-ci.org/jsreport/online.png?branch=master)](https://travis-ci.org/jsreport/online)
